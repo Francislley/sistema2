@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block title %}滨恒贸易{% endblock %}
+{% block script %}
+
+{% endblock %}
+{% block content %}
+
+
+{% load staticfiles %}
+
+     <!-- 引入jQuery -->
+    <script src="http://apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+     <!-- 引入 Bootstrap -->
+     <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+     <link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet" type="text/css">
+      <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+     <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
+     <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+
+
+
+
+    <div id="test" class="form-group container row">
+        <div class=" col-md-6 col-md-offset-2">
+            <input type="text" class="form-control input-lg" id="testForGuest" placeholder="输入这个组织的名字">
+        </div>
+        <input type="submit" placeholder="提交" class="col-md-2 btn-lg alert-success" onclick="test()">
+    </div>
+
+    <div class="container" id="main">
+        <div class="content">
+            <h2 class="hero">请选择你要查询的数据</h2>
+        </div>
+        <div class="table-responsive">
+
+
+
+
+
+
+
+
+                <!-- <div class="col-xs-12 col-md-8 col-md-offset-2"> -->
+                    <table class="table table-hover " style="">
+                    <tr>
+                    <td id="number"><strong>编号</strong></td>
+                    <td id="name"><strong>书名</strong></td>
+                    <td id="isbn">价格<strong></strong></td>
+                    <td id="price"><strong>Publish</strong></td>
+                    <td id="state"><strong>图书来源</strong></td>
+                    <td id="owner"><strong>Keeper</strong></td>
+                    <td id="endtime"><strong>Endtime</strong></td>
+
+                    </tr>
+
+
+                    {% for book in books %}
+
+                    <tr class="
+                    {% if book.Endtime == none %}
+                        success
+                    {% else %}
+                        {% if book.Ordered == True %}
+                            warning
+                        {% else %}
+                            danger
+                        {% endif %}
+                    {% endif %}">
+
+                    <td>{{ book.Number }}</td>
+                    <td><a href="./borrow/{{ book.Number }}/">{{ book.Title }}</a></td>
+                    <td>{{ book.Price }}</td>
+                    <td>{{ book.Publish }}</td>
+                    <td>{{ book.Owner }}</td>
+                    {% if  book.Ordered and book.Keeper %}
+                    <td>Ordered</td>
+                    <td></td>
+                    {% elif book.Ordered = False and book.Keeper %}
+                    <td>{{ book.Keeper }}</td>
+                    <td>{{ book.Endtime }}</td>
+                    {% elif book.Ordered = False and not book.Keeper %}
+                    <td></td>
+                    <td></td>
+                    {% endif %}
+
+                    </tr>
+
+
+                    {% endfor %}
+                </table>
+            </div>
+        <!-- </div>  -->
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,213 @@
+{% extends "base.html" %}
+{% block title %}借取{{ book.name }}{% endblock %}
+{% block script %}
+
+{% load staticfiles %}
+
+     <!-- 引入jQuery -->
+    <script src="http://apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+     <!-- 引入 Bootstrap -->
+     <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+     <link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet" type="text/css">
+      <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+     <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
+     <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+<script>
+    $(document).ready(function(){
+        $('.alert').hide();
+        $('#information-div').mouseover(function(){
+            $('#summary-show').fadeOut("fast");
+            $('.alert').fadeIn("slow");
+        });
+         // $("#id_usrid").val("请输入您的姓名或id");
+    });
+    DOUBAN.apikey = '00fa6c0654689a0202ef4412fd39ce06'
+    DOUBAN.getISBNBook({
+    isbn:'{{ booksinfo.Isbn }}', 
+    callback:function(book1){
+        var subj = DOUBAN.parseSubject(book1)
+        var tl = subj.title ? subj.title : "";
+        var author = subj.author ? subj.author : "";
+        $('#cover-image').attr("src",subj.link.image);
+        $('#title').attr("href",subj.link.alternate);
+        $('#title').html(tl);
+        $('#author').html(subj.attribute.author);
+        $('#ISBN').html(subj.attribute.isbn13);
+        $('#summary-div').html(subj.summary);
+        var publi=subj.attribute.publisher+"/"+subj.attribute.pubdate;
+        $('#publisher').html(publi);
+        $('#rating-average').html(subj.rating.average);
+    }
+})
+</script>
+
+<style>
+  form input{
+      padding-top: 10px;
+      margin-bottom: 20px;
+  }
+
+    #id_usrid {
+  display: block;
+  width: 40%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.428571429;
+  color: #555555;
+  vertical-align: middle;
+  background-color: #ffffff;
+  background-image: none;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+          transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+
+#id_usrid:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+
+#id_usrid:-moz-placeholder {
+  color: #999999;
+}
+
+#id_usrid::-moz-placeholder {
+  color: #999999;
+  opacity: 1;
+}
+
+#id_usrid:-ms-input-placeholder {
+  color: #999999;
+}
+
+#id_usrid::-webkit-input-placeholder {
+  color: #999999;
+}
+
+#id_usrid[disabled],
+#id_usrid[readonly],
+fieldset[disabled] #id_usrid {
+  cursor: not-allowed;
+  background-color: #eeeeee;
+}
+
+textarea#id_usrid {
+  height: auto;
+}
+    #id_time{
+
+    }
+.time{
+    text-align: left;
+}
+</style>
+{% endblock %}
+{% block content %}
+
+{% load staticfiles %}
+
+     <!-- 引入jQuery -->
+    <script src="http://apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+     <!-- 引入 Bootstrap -->
+     <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+     <link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet" type="text/css">
+      <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+     <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
+     <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+
+
+
+
+<div class="container row" id="borrow">
+ <div id="information-div" class="row responsive-utilities-test visible-on">
+        <div id="cover-div" class="col-xs-3 col-sm-2">
+            <img width="106px" height="160px" id="cover-image"/>
+        </div>
+        <div id="information-subdiv">
+            <div class="col-xs-5 col-sm-4" >
+                <h3>&nbsp;</h3>
+                <p>作者：</p>
+                <p>ISBN：</p>
+                <p>出版信息：</p>
+                <p>豆瓣评分：</p>
+            </div>
+            <div class="col-xs-4 col-sm-4" >
+                <h3><a id="title" target='_blank'></a></h3>
+                <p id="author"></p>
+                <p id="ISBN"></p>
+                <p id="publisher"></p>
+                <p id="rating-average"></p>
+            </div>
+
+        </div>
+        <div  class="alert col-md-12" style="text-align: left">
+            <blockquote>
+            <p id="summary-div"></p>
+            </blockquote>
+        </div>
+    </div>
+
+  <div style="{% if booksinfo.Keeper %}
+      display:none  {% endif %} ">
+    <form id="form-div" class="form-inline" role="form" action="" method="POST">
+	   {% csrf_token %}
+
+           <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">你的姓名</span>
+                    {{ form.usrid.errors }}
+                    <input tabindex="1" placeholder="请输入你的姓名" name="usrid" type="text" class="form-control" id="id_username"  size="20" maxlength="20"  onfocus="clearMsg('div_uname_hint')" onblur="verifyUName(username.value,'div_uname_hint')"/>
+
+                </div>
+                <div id="div_uname_hint" class="hint_error"></div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">借阅天数</span>
+                    {{ form.borrow_time.errors }}
+                    <input tabindex="5" placeholder="请输入借阅天数(4-42)" class="form-control" name="borrow_time" type="tel" size="20" maxlength="20" onfocus="clearMsg('div_tel_hint')" onblur="verifyTel(borrow_time.value,'div_tel_hint')"/>
+                </div>
+                <div id="div_tel_hint" class="hint_error"></div>
+            </div>
+
+
+
+          <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">电话号码</span>
+                    {{ form.phone_number.errors }}
+                    <input tabindex="5" placeholder="请输入你的电话号码" class="form-control"name="phone_number" type="tel" size="20" maxlength="20" onfocus="clearMsg('div_tel_hint')" onblur="verifyTel(phone_number.value,'div_tel_hint')"/>
+                </div>
+                <div id="div_tel_hint" class="hint_error"></div>
+            </div>
+
+             <div class="form-group">
+              <center>
+                <br>
+                <div class="input-group">
+                    <div id="div_accept_hint" class="hint_error"></div>
+                    <button tabindex="9" type="submit" class="btn btn-success" onclick="verifyInput()">确定</button>
+                </div>
+              </center>
+            </div>
+</div>
+</div>
+{% endblock %}

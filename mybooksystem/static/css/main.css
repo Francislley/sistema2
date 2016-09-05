@@ -1,0 +1,55 @@
+body{
+
+}
+.container{
+    text-align: center;
+    margin: auto;
+}
+
+#test{
+    margin-top: 20%;
+    margin-bottom: 20%;
+}
+#id{
+    width: 5%;
+    overflow: hidden;
+}
+
+
+footer{
+    display: block;
+    background: #dcdcdc;
+    text-align: center;
+    margin: auto;
+    position: fixed;
+    bottom: 0px;
+}
+
+#form-div{
+    margin-top: 5%;
+}
+
+#borrow{
+    margin-top: 10%;
+    margin-bottom: 10%;
+}
+
+#borrow-submit{
+    width: 4.5em;
+}
+
+#information-div{
+    padding-top: 1%;
+    padding-bottom: 1%;
+    background: ghostwhite;
+    border-radius: 15px;
+}
+
+#information-div img{
+    padding-top: 15%;
+}
+
+#hero{
+    text-align: center;
+    margin: auto;
+}
